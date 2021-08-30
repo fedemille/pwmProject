@@ -1,0 +1,54 @@
+<% if(redirect){ %>
+	<!DOCTYPE HTML>
+	<html lang="en-US">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="robots" content="noindex, nofollow">
+			<meta http-equiv="refresh" content="2;url=<%= url %>">
+			<script type="text/javascript">
+				setTimeout(() => {window.location.href = "/"}, 1500);
+			</script>
+		</head>
+		<body>
+			<h2 style="color: red;">Credenziali errate</h2>
+			If you are not redirected automatically, <a href="<%= url %>">click here</a>.
+		</body>
+	</html>
+<% }
+	else{ %>
+	
+	
+	<%- include("header") %>
+		<main>
+			<form method="POST"><input type="submit" name="logout" value="Logout"></form>
+			Ciao <%= nome %> <%= cognome %>.<br><br>
+			<h4><%  if(typeof msg !== "undefined") msg %></h4>
+			<h3>Gestione immobili</h3>
+			<form method="POST" action="/areaRiservata">
+				<input type="text" name="nome" placeholder="Titolo">
+				<input type="text" name="desc" placeholder="Descrizione">
+				<input type="number" min="0" step="1" name="prezzo" placeholder="Prezzo">
+				<select name="tipo">
+					<option value="0">Villa</option>
+					<option value="1">Appartamento</option>
+					<option value="2">Terreno</option>
+					<option value="3">Capannone</option>
+				</select>
+				<select name="citta">
+					<option value="">---</option>
+					<option value="milano">Milano</option>
+					<option value="roma">Roma</option>
+					<option value="torino">Torino</option>
+					<option value="brescia">Brescia</option>
+					<option value="mantova">Mantova</option>
+					<option value="asti">Asti</option>
+					<option value="alessandria">Alessandria</option>
+					<option value="varese">Varese</option>
+				</select>
+				<input type="submit" name="add" value="Aggiungi">
+			</form>
+		</main>
+	</body>
+	</html>
+
+<% } %>
