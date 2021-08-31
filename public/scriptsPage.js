@@ -15,20 +15,34 @@ function login(){
 
 var x;
 function getPosition() {
-	x = document.getElementById("cittaFiltro");
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(readPosition, showError);
 	} else {
-		alert("Geolocation is not supported by this browser.");
+		alert("Geolocalizzazione non supportata.");
 	}
 }
 
 function readPosition(position) {
+	x = _("cittaFiltro");
 	console.log(x.childNodes[1]);
 	x.childNodes[1].selected = "selected";
 	x.childNodes[1].value = position.coords.latitude + "," + position.coords.longitude;
-	x.childNodes[1].innerHTML = position.coords.latitude + " " + position.coords.longitude;
+	x.childNodes[1].innerHTML = "Posizione corrente";
 	x.disabled = "disabled";
+}
+
+function _(id){
+	return document.getElementById(id);
+}
+function filtra(){
+	const xhttp = new XMLHttpRequest();
+	xhttp.onload = function() {
+		_("dati").innerHTML = this.responseText;
+	}
+	xhttp.open("POST", "/search");
+	xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xhttp.send("nome="+_("nomeFiltro").value+"&citta="+_("cittaFiltro").value);
+	return false;
 }
 
 function showError(error) {

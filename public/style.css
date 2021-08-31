@@ -1,3 +1,78 @@
+input[type=text], input[type=email], input[type=password]{
+	width: 200px;
+	min-height: 25px;
+	border: 0;
+	border-bottom: solid 2px rgb(117, 126, 198);
+	transition: all 0.3s;
+	background-color: rgb(224, 224, 224);
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+input[type=text]:hover, input[type=email]:hover, input[type=password]:hover{
+	border-bottom: solid 2px rgb(12, 121, 255);
+}
+
+input[type=text]:active, input[type=email]:active, input[type=password]:active, 
+input[type=text]:focus, input[type=email]:focus, input[type=password]:focus{
+	border-bottom: solid 2px rgb(255, 153, 0);
+}
+
+input[type=submit]{
+	min-width: 60px;
+	height: 25px;
+	font-weight: bold;
+	border: 0;
+	background-color: rgb(112, 196, 94);
+	cursor: pointer;
+	transition: 0.25s;
+}
+input[type=submit]:focus, input[type=submit]:hover {
+	background-color: rgb(85, 175, 65);
+}
+
+
+
+
+div.immobile{
+	width: 100%;
+	padding: 20px 10%;
+}
+div.immobile > div:first-child{
+	font-weight: bold;
+	font-size: 24px;
+}
+div.immobile > div:not(:first-child){
+	margin-left: 20px;
+}
+
+
+
+.filtri{overflow: auto;}
+.filtri > div{
+	float: left;
+	width: auto;
+	padding: 10px 20px;
+	text-align: center;
+}
+
+
+.loginForm{
+	background-color: #ffe032;
+	width: 200px;
+	height: 100px;
+	z-index: 10000;
+	position: fixed;
+	right: 0;
+	padding: 10px 20px;
+	border-radius: 0 0 0 15px;
+	border-left: solid 1px gray;
+	border-bottom: solid 1px gray;
+	box-shadow: 7px 10px 24px 0px rgba(46,46,46,0.75);
+}
+
+
+
+
 body{
 	padding: 0;
 	margin: 0;
@@ -47,6 +122,7 @@ main{
 	margin-top: 10%;
 	margin-bottom: 100px;
 	background-color: white;
+	padding: 0 20px;
 }
 main > div{
 	width: 90%;
@@ -57,15 +133,6 @@ main > div{
 }
 
 
-
-.loginForm{
-	background-color: green;
-	width: 200px;
-	height: 100px;
-	z-index: 10000;
-	position: fixed;
-	right: 0;
-} 
 
 
 

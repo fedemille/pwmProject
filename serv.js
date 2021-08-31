@@ -38,32 +38,55 @@ app.get("/", (req, res) => {
 	console.log("a");
 	dbo.collection("immobili").find({}).toArray(function(err, result) {
 		if (err) throw err;
-		res.render("index", {db: result});
+		res.render("index", {db: result, nome: req.session.name});
 	});
 });
+function isEmpty(str) {
+	//console.log(str);
+    return (!str || str.length === 0 );
+}
 
-
-app.post("/", (req, res) => {
-	//console.log(req.body);
-	for(var property in req.body) {
-		if(req.body[property] == '') req.body[property] = '*';
+app.post("/search", (req, res) => {
+	try{
+		console.log(req.body);
+		/*for(var property in req.body) {
+			if(req.body[property] == '') req.body[property] = '';
+		}*/
+		
+		if(!isEmpty(req.body.citta)){
+			console.log("Primo");
+			const aa = 0.1;
+			var lat = parseFloat(req.body.citta.split(",")[0].trim());
+			var lon = parseFloat(req.body.citta.split(",")[1].trim());
+			var latl = lat-aa;
+			var latg = lat+aa;
+			var lonl = lon-aa;
+			var longr = lon+aa;
+			console.log("Lat: " + req.body.citta.split(",")[1] + " " + longr);
+			
+			var query = { $or:[ {$and:[ {$and:[{lon:{$gte:lonl}}, {lon:{$lte:longr}}]}, {$and:[{lat:{$gte:latl}}, {lat:{$lte:latg}}]}]}, {titolo:new RegExp(req.body.nome.trim(), "i")}] };
+			//var query = {$and:[ {$and:[{lon:{$gte:lonl}}, {lon:{$lte:longr}}]}, {$and:[{lat:{$gte:latl}}, {lat:{$lte:latg}}]}]};
+		}
+		else if(!isEmpty(req.body.nome)){
+			console.log("sec");
+			var query = {titolo: new RegExp(req.body.nome.trim(), "i")};
+		}
+		else
+			var query = {};
+		
+		
+		dbo.collection("immobili").find(query).toArray(function(err, result) {
+			if (err){ console.log("Errore query: "+err);throw err; }
+			if(result.length === 0)
+				res.send("Nessun immobile trovato");
+			else
+				res.render("immobili", {db: result});
+		});
 	}
-	const aa = 0.1;
-	var lat = parseFloat(req.body.citta.split(",")[0].trim());
-	var lon = parseFloat(req.body.citta.split(",")[1].trim());
-	var latl = lat-aa;
-	var latg = lat+aa;
-	var lonl = lon-aa;
-	var longr = lon+aa;
-	//console.log("Lat: " + req.body.citta.split(",")[1] + " " + longr);
-	
-	var query = { $or:[ {$and:[ {$and:[{lon:{$gte:lonl}}, {lon:{$lte:longr}}]}, {$and:[{lat:{$gte:latl}}, {lat:{$lte:latg}}]}]}, {titolo:req.body.nome}] };
-	//var query = {$and:[ {$and:[{lon:{$gte:lonl}}, {lon:{$lte:longr}}]}, {$and:[{lat:{$gte:latl}}, {lat:{$lte:latg}}]}]};
-	
-	dbo.collection("immobili").find(query).toArray(function(err, result) {
-		if (err){ console.log("Errore query: "+err);throw err; }
-		res.render("index", {db: result});
-	});
+	catch(e){
+		console.log("Errore filtri: "+e.message);
+		res.send("Nessun dato disponibile");
+	}
 	
 });
 //{ $or:[ {$and:[ {$and:[{lon:{$gte:"8"}}, {lon:{$lte:"10"}}]}, {$and:[{lat:{$gte:"44"}}, {lat:{$lte:"46"}}]}]}, {titolo:req.body.nome}] }
@@ -90,12 +113,18 @@ app.post("/login", (req, res) => {
 
 
 
+
 app.get("/areaRiservata", (req, res) => {
 	if(typeof req.session.email === 'undefined'){
 		res.redirect('/'); 
 		return; 
-	} 
-	res.render("areaRiservata", {redirect: false, nome: req.session.name, cognome: req.session.surname}); 
+	}
+	var msg = "";
+	dbo.collection("immobili").find({}).toArray(function(err, result) {
+		if (err) throw err;
+		res.render("areaRiservata", {redirect: false, db: result, msg: msg, nome: req.session.name, cognome: req.session.surname});
+	});
+	//res.render("areaRiservata", {redirect: false, nome: req.session.name, cognome: req.session.surname}); 
 });
 
 app.post("/areaRiservata", (req, res) => {
@@ -103,6 +132,8 @@ app.post("/areaRiservata", (req, res) => {
 	console.log("Area riservata");
 	console.log(sess);
 	if(typeof req.session.email === 'undefined'){ res.redirect('/'); return; }
+	
+	
 	
 	var msg = "";
 	if(typeof req.body.add !== 'undefined'){
@@ -112,7 +143,6 @@ app.post("/areaRiservata", (req, res) => {
 			console.log("Immobile aggiunto");
 			msg = "Immobile aggiunto";
 		});
-		res.render("areaRiservata", {redirect: false, msg: msg, nome: req.session.name, cognome: req.session.surname});
 	}
 	else if(typeof req.body.logout !== 'undefined'){
 		req.session.destroy((err) => {
@@ -122,9 +152,13 @@ app.post("/areaRiservata", (req, res) => {
 			console.log("Cancellazione sessione");
 			res.redirect('/');
 		});
+		return;
 	}
-	else
-		res.render("areaRiservata", {redirect: false, msg: msg, nome: req.session.name, cognome: req.session.surname});
+	
+	dbo.collection("immobili").find({}).toArray(function(err, result) {
+		if (err) throw err;
+		res.render("areaRiservata", {redirect: false, db: result, msg: msg, nome: req.session.name, cognome: req.session.surname});
+	});
 	
 });
 
