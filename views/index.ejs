@@ -1,27 +1,31 @@
 <%- include("header") %>
+	<script>
+	 addEventListener("load", function(){
+		loadDoc(0);
+	 });
+	</script>
 	<main>
-		<h3>Filtra i risultati</h3>
-		<form method="POST" class="filtri" onsubmit="return filtra()">
-			<div><input type="text" id="nomeFiltro" name="nome" placeholder="Titolo"></div>
-			<div><select id="cittaFiltro" name="citta">
-				<option value="">---</option>
-				<option value="45.46,9.19">Milano</option>
-				<option value="41.9,12.48">Roma</option>
-				<option value="44.88,11.99">Torino</option>
-				<option value="45.55,10.25">Brescia</option>
-				<option value="45.15,10.8">Mantova</option>
-				<option value="44.91,8.16">Asti</option>
-				<option value="44.90,8.61">Alessandria</option>
-				<option value="48.8,8.83">Varese</option>
-			</select>
-			or <input type="button" onclick="getPosition()" value="Usa la mia posizione">
-			</div>
-			<div><input type="submit" value="Filtra"></div>
-		</form>
-		
-		<h3>Immobili trovati</h3>
+		<fieldset style="border-radius: 10px;">
+			<legend><span style="font-size: 1.1em; font-weight: bold;">Filtro</span></legend>
+			<form method="POST" onsubmit="return filtra()">
+				Titolo: 
+				<input type="text" id="nomeFiltro" name="nome" placeholder="Titolo">
+				<br>
+				Citta:
+				<select id="cittaFiltro" name="citta">
+					<option value="">---</option>
+					<option value="45.46,9.19">Milano</option>
+					<option value="44.88,11.99">Torino</option>
+					<option value="44.90,8.61">Alessandria</option>
+				</select>
+				or <input type="button" onclick="getPosition()" value="Usa la mia posizione">
+				
+				<br>
+				<input type="submit" value="Filtra">
+			</form>
+		</fieldset>
 		<div id="dati">
-			<%- include("immobili") %>
+			
 		</div>
 	</main>
 </body>

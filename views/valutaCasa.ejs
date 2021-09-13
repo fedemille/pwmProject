@@ -1,0 +1,25 @@
+<%- include("header") %>
+	<main>
+		<% if(typeof okay !== "undefined"){ %>
+			La tua richiesta verrà presa in esame e ti sarà fornita una risposta entro 2 giorni lavorativi. Grazie!
+		<% } %>
+		<form method="POST">
+			Che tipo di immobile è?<br>
+			<select name="tipo">
+				<option value="app">Appartamento</option>
+				<option value="villa">Villa</option>
+				<option value="cap">Capannone</option>
+				<option value="neg">Negozio</option>
+				<option value="altro">Altro</option>
+			</select>
+			<br><br>
+			Descrivi l'immobile da valutare<br>
+			<textarea name="richiesta" placeholder="" required></textarea>
+			<br><br>
+			<input type="email" id="email" name="email" placeholder="E-mail di contatto" required>
+			<br><br>
+			<input type="submit" value="Richiedi valutazione">
+		</form>
+	</main>
+</body>
+</html>

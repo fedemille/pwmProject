@@ -1,0 +1,17 @@
+<%- include("header") %>
+	<main>
+		<h1>Visualizza immobile</h1>
+		<div class="immobileSingolo">
+			
+				<% if(db[0].img !== "undefined"){ %>
+				<img src="image/<%= db[0].img %>">
+				<% } %>
+			<span>Titolo</span><%= db[0].titolo %><br>
+			
+			<span>Prezzo</span><%= db[0].prezzo %><br>
+			<span class="desc">Descrizione</span><%= db[0].desc %>
+		</div>
+		
+	</main>
+</body>
+</html>

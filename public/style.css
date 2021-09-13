@@ -1,97 +1,42 @@
-input[type=text], input[type=email], input[type=password]{
-	width: 200px;
-	min-height: 25px;
-	border: 0;
-	border-bottom: solid 2px rgb(117, 126, 198);
-	transition: all 0.3s;
-	background-color: rgb(224, 224, 224);
-	margin-bottom: 5px;
-	font-weight: bold;
-}
-input[type=text]:hover, input[type=email]:hover, input[type=password]:hover{
-	border-bottom: solid 2px rgb(12, 121, 255);
-}
-
-input[type=text]:active, input[type=email]:active, input[type=password]:active, 
-input[type=text]:focus, input[type=email]:focus, input[type=password]:focus{
-	border-bottom: solid 2px rgb(255, 153, 0);
-}
-
-input[type=submit]{
-	min-width: 60px;
-	height: 25px;
-	font-weight: bold;
-	border: 0;
-	background-color: rgb(112, 196, 94);
-	cursor: pointer;
-	transition: 0.25s;
-}
-input[type=submit]:focus, input[type=submit]:hover {
-	background-color: rgb(85, 175, 65);
-}
-
-
-
-
-div.immobile{
-	width: 100%;
-	padding: 20px 10%;
-}
-div.immobile > div:first-child{
-	font-weight: bold;
-	font-size: 24px;
-}
-div.immobile > div:not(:first-child){
-	margin-left: 20px;
-}
-
-
-
-.filtri{overflow: auto;}
-.filtri > div{
-	float: left;
-	width: auto;
-	padding: 10px 20px;
-	text-align: center;
-}
-
-
-.loginForm{
-	background-color: #ffe032;
-	width: 200px;
-	height: 100px;
-	z-index: 10000;
-	position: fixed;
-	right: 0;
-	padding: 10px 20px;
-	border-radius: 0 0 0 15px;
-	border-left: solid 1px gray;
-	border-bottom: solid 1px gray;
-	box-shadow: 7px 10px 24px 0px rgba(46,46,46,0.75);
-}
-
-
-
-
 body{
 	padding: 0;
 	margin: 0;
-	background: rgba(120, 20, 120, 1);
+	/*background: rgba(120, 20, 120, 1);*/
+	font-size: 17px;
+	background-color: pink;
+	font-family: helvetica;
 }
+
+div.titoloTop{
+	font-size: 2.6em;
+	font-family: arial;
+	margin: 0 auto;
+	text-align: center;
+}
+div.titoloTop > span{
+	font-size: 0.55em;
+}
+
+
 nav{
-	background: linear-gradient(to bottom, white 80%, transparent 90%);
+	/*background: linear-gradient(to bottom, white 80%, transparent 90%);*/
+	position: relative;
 }
-nav > .logo{
-	width: 100px;
-	height: 100px;
-	background-size: cover;
-	background-image: url("insta.png");
+.logo{
+	width: 100%;
+	position: absolute;
+	z-index: -1;
 	margin: 0 auto;
 }
-nav > .links{
+.logo > img{
 	width: 100%;
 }
-nav > .links > ul{
+.links{
+	width: 100%;
+	position: sticky;
+	top: 0;
+}
+.links > ul{
 	list-style-type: none;
 	background-color: yellow;
 	width: max-content;
@@ -99,11 +44,11 @@ nav > .links > ul{
 	padding: 0;
 	overflow: hidden;
 }
-nav > .links > ul > li{
+.links > ul > li{
 	float: left;
 	text-align: center;
 }
-nav > .links > ul > li > a{
+.links > ul > li > a{
 	text-decoration: none;
 	display: block;
 	padding: 10px 25px;
@@ -112,7 +57,7 @@ nav > .links > ul > li > a{
 	background-color: transparent;
 	transition: background-color 0.25s;
 }
-nav > .links > ul > li > a:hover{
+.links > ul > li > a:hover{
 	background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -122,17 +67,163 @@ main{
 	margin-top: 10%;
 	margin-bottom: 100px;
 	background-color: white;
-	padding: 0 20px;
+	padding: 20px 15px;
+	box-shadow: 5px 5px 18px 0px #000000;
 }
-main > div{
+
+
+#dati{
 	width: 90%;
 	margin-left: 5%;
 	border-bottom: solid 2px gray;
 	min-height: 200px;
 	margin-bottom: 10px;
+	margin-top: 30px;
+}
+
+#dati > div{
+	padding: 5px 10px 30px 10px;
+	cursor: pointer;
+	transition: all 0.3s;
+}
+#dati > div:hover{
+	background-color: rgba(238, 0, 255, 0.3);
+}
+
+#dati > div div.titolo{
+	font-weight: bold;
+	font-size: 1.4em;
+}
+
+#dati > div div:not(:first-child){
+	margin-left: 10px;
+}
+
+#dati > div div.desc{
+	margin-top: 5px;
+}
+
+#dati > div div.prezzo{
+	font-weight: bold;
+	font-size: 1.15em;
+	float: right;
+}
+
+#dati > div div.prezzo::after{
+	content: "€";
+}
+
+#dati a{
+	text-decoration: none;
+	color: black;
 }
 
 
+
+.loginForm{
+	background-color: rgb(240, 240, 240);
+	border: solid 1px gray;
+	border-width: 0 0 1px 1px;
+	padding: 20px 20px;
+	z-index: 10000;
+	position: fixed;
+	right: 0;
+	transform: translateX(2000px) scale(.7);
+}
+
+
+
+
+div.immobileSingolo{
+	margin-left: 20px;
+	border-radius: 10px;
+	border: solid 1px gray;
+	font-size: 1.4em;
+	overflow-y: auto;
+	font-family: helvetica;
+}
+div.immobileSingolo img{
+	max-width: 300px;
+	max-height: 300px;
+	float: left;
+}
+div.immobileSingolo span{
+	font-weight: bold;
+	font-size: 1.2em;
+	padding: 10px 15px;
+	display: inline-block;
+}
+
+
+input[type=text], input[type=email], input[type=password]{
+	width: 250px;
+	height: 25px;
+}
+
+input[type=submit], input[type=button]{
+	min-width: 150px;
+	height: 30px;
+}
+
+
+
+
+@media screen and (max-width: 1000px){
+	body{
+		font-size: 30px;
+	}
+	input[type=text], input[type=email], input[type=password], select{
+		width: 80%;
+		height: auto;
+		font-size: 2em;
+		margin-left: 10%;
+		margin-bottom: 20px;
+	}
+	input[type=submit], input[type=button]{
+		width: 80%;
+		height: auto;
+		font-size: 2em;
+		margin-left: 10%;
+		margin-bottom: 20px;
+	}
+	main{
+		width: 100%;
+		margin-left: 0;
+		margin-bottom: 100px;
+		padding: 0;
+	}
+	nav{
+		width: 100%;
+	}
+	nav > .logo{
+		width: 100%;
+		height: 200px;
+		margin: 0 auto;
+		position: sticky;
+		top: 0;
+	}
+	nav > .links{
+		
+	}
+	nav > .links > ul{
+		width: 100%;
+		font-size: 1.5em;
+		background-color: rgba(255, 255, 255, 0.3);
+	}
+	nav > .links > ul > li{
+		clear: both;
+		width: 100%;
+		text-align: center;
+	}
+	nav > .links > ul > li > a{
+		padding-top: 30px;
+		padding-bottom: 30px;
+	}
+	
+	#dati{
+		margin-top: 100px;
+	}
+}
 
 
 

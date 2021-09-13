@@ -15,34 +15,20 @@ function login(){
 
 var x;
 function getPosition() {
+	x = document.getElementById("cittaFiltro");
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(readPosition, showError);
 	} else {
-		alert("Geolocalizzazione non supportata.");
+		alert("Geolocation is not supported by this browser.");
 	}
 }
 
 function readPosition(position) {
-	x = _("cittaFiltro");
 	console.log(x.childNodes[1]);
 	x.childNodes[1].selected = "selected";
 	x.childNodes[1].value = position.coords.latitude + "," + position.coords.longitude;
-	x.childNodes[1].innerHTML = "Posizione corrente";
-	x.disabled = "disabled";
-}
-
-function _(id){
-	return document.getElementById(id);
-}
-function filtra(){
-	const xhttp = new XMLHttpRequest();
-	xhttp.onload = function() {
-		_("dati").innerHTML = this.responseText;
-	}
-	xhttp.open("POST", "/search");
-	xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	xhttp.send("nome="+_("nomeFiltro").value+"&citta="+_("cittaFiltro").value);
-	return false;
+	x.childNodes[1].innerHTML = position.coords.latitude + " " + position.coords.longitude;
+	//x.disabled = "disabled";
 }
 
 function showError(error) {
@@ -60,8 +46,47 @@ function showError(error) {
 		alert("An unknown error occurred.");
 		break;
 	}
-} 
+}
+
+
+function filtra(){
+	loadDoc(1);
+	return false;
+}
+
+
+function _(id){
+	return document.getElementById(id);
+}
+
+function loadDoc(cerca) {		// 0 -> ricerca normale | 1 -> ricerca filtrata | 2 -> ricerca per areaRiservata
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("dati").innerHTML = this.responseText;
+		}
+	};
+	xhttp.open("POST", "/search", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	if(cerca == 1)
+		xhttp.send("citta="+_("cittaFiltro").value+"&nome="+_("nomeFiltro").value);
+	else if(cerca == 0)
+		xhttp.send();
+	else if(cerca == 2)
+		xhttp.send("reserved=1");
+}
 
 
 
+
+
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+	}
+   return result;
+}
 

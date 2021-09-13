@@ -1,7 +1,18 @@
 <% if(typeof db !== "undefined") db.forEach(function(a){ %>
-		<div class="immobile">
-			<div><%= a.titolo %></div>
-			<div><%= a.desc %></div>
-			<div><%= a.prezzo %></div>
+		<div>
+			<div class="titolo"><a href="/immobile?id=<%= a._id %>"><%= a.titolo %></a></div>
+			<div class="prezzo"><%= a.prezzo %></div>
+			<div class="desc"><%= a.desc.substr(0, 50) %></div>
+			<div class="city"><%= a.citta %></div>
+		</div>
+<% });
+	else if(typeof dbReserved !== "undefined") dbReserved.forEach(function(a){ %>
+		<div>
+			<form method="post">
+				<div class="titolo"><%= a.titolo %></div>
+				<div class="prezzo"><%= a.prezzo %></div>
+				<input type="hidden" name="id" value="<%= a._id %>">
+				<input type="submit" name="del" class="del" value="Elimina">
+			</form>
 		</div>
 <% }); %>

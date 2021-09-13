@@ -19,12 +19,17 @@
 	
 	
 	<%- include("header") %>
+		<script>
+			addEventListener("load", function(){
+				loadDoc(2);
+			});
+		</script>
 		<main>
 			<form method="POST"><input type="submit" name="logout" value="Logout"></form>
 			Ciao <%= nome %> <%= cognome %>.<br><br>
 			<h4><%  if(typeof msg !== "undefined") msg %></h4>
 			<h3>Gestione immobili</h3>
-			<form method="POST" action="/areaRiservata">
+			<form method="POST" action="/areaRiservata" enctype="multipart/form-data">
 				<input type="text" name="nome" placeholder="Titolo">
 				<input type="text" name="desc" placeholder="Descrizione">
 				<input type="number" min="0" step="1" name="prezzo" placeholder="Prezzo">
@@ -35,21 +40,19 @@
 					<option value="3">Capannone</option>
 				</select>
 				<select name="citta">
-					<option value="">---</option>
 					<option value="45.46,9.19">Milano</option>
-					<option value="41.9,12.48">Roma</option>
 					<option value="44.88,11.99">Torino</option>
-					<option value="45.55,10.25">Brescia</option>
-					<option value="45.15,10.8">Mantova</option>
-					<option value="44.91,8.16">Asti</option>
 					<option value="44.90,8.61">Alessandria</option>
-					<option value="48.8,8.83">Varese</option>
 				</select>
+				<input type="text" name="nomeCitta" placeholder="Nome della citta'">
+				<label for="image">Upload Image</label>
+                <input type="file" id="image" name="image" value="">
 				<input type="submit" name="add" value="Aggiungi">
 			</form>
 			
-			<div>
-				<%- include("immobili") %>
+			
+			<div id="dati">
+				
 			</div>
 		</main>
 	</body>
