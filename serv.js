@@ -49,18 +49,30 @@ app.post("/search", (req, res) => {
 		if(req.body[property] == '') req.body[property] = '*';
 	}*/
 	
-	if(typeof req.body.citta !== "undefined"){
-		const aa = 0.1;
-		var lat = parseFloat(req.body.citta.split(",")[0].trim());
-		var lon = parseFloat(req.body.citta.split(",")[1].trim());
-		var latl = lat-aa;
-		var latg = lat+aa;
-		var lonl = lon-aa;
-		var longr = lon+aa;
-		//console.log("Lat: " + req.body.citta.split(",")[1] + " " + longr);
+	console.log("Search");
+	
+	if(typeof req.body.filtra !== "undefined"){
+		console.log("Filtro");
+		var latl=0, latg=100, lonl=0, longr=100;
 		
-		var query = { $or:[ {$and:[ {$and:[{lon:{$gte:lonl}}, {lon:{$lte:longr}}]}, {$and:[{lat:{$gte:latl}}, {lat:{$lte:latg}}]}]}, {titolo:req.body.nome}] };
+		if(req.body.nome == "") req.body.nome = /./;
+		else req.body.nome = {'$regex' : req.body.nome, '$options' : 'i'};
+		
+		if(req.body.citta != ""){
+			console.log("Filtro citta");
+			const aa = 0.1;
+			var lat = parseFloat(req.body.citta.split(",")[0].trim());
+			var lon = parseFloat(req.body.citta.split(",")[1].trim());
+			var latl = lat-aa;
+			var latg = lat+aa;
+			var lonl = lon-aa;
+			var longr = lon+aa;
+			//console.log("Lat: " + req.body.citta.split(",")[1] + " " + longr);
+		}
+		
+		var query = { $and:[ {$and:[ {$and:[{lon:{$gte:lonl}}, {lon:{$lte:longr}}]}, {$and:[{lat:{$gte:latl}}, {lat:{$lte:latg}}]}]}, {titolo:req.body.nome}] };
 		//var query = {$and:[ {$and:[{lon:{$gte:lonl}}, {lon:{$lte:longr}}]}, {$and:[{lat:{$gte:latl}}, {lat:{$lte:latg}}]}]};
+	console.log(query);
 	}
 	else{
 		var query = {};
@@ -159,7 +171,24 @@ app.get("/immobile", (req, res) => {
 		console.log(result); 
 		dbo.collection("images").find({idImmobile: result[0]._id}).toArray(function(err, resultImgs) {
 			if (err){ console.log("Errore query: "+err);throw err; }
-			res.render("immobile", {db: result, imgs: resultImgs});
+			
+			
+			if(typeof req.body.casa !== "undefined"){
+				mailOptions.text = 'Richiesta di acquisto ' + addslashes(req.body.nameImm) + ' (' + addslashes(req.body.idImm) + '). Telefono: ' + addslashes(req.body.tel);
+				
+				transporter.sendMail(mailOptions, function(error, info){
+					if (error)
+						console.log(error);
+					else
+						console.log('Email sent: ' + info.response);
+				}); 
+				res.render("immobile", {db: result, imgs: resultImgs, okay: {}});
+			}
+			else
+				res.render("immobile", {db: result, imgs: resultImgs});
+			
+			
+			
 		});
 	});
 }); 
@@ -180,7 +209,6 @@ const handleError = (err, res) => {
 
 const upload = multer({
 	dest: "uploads"
-	// you might also want to set some limits: https://github.com/expressjs/multer#limits
 });
 
 

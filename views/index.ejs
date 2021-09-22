@@ -5,8 +5,10 @@
 	 });
 	</script>
 	<main>
+	<a id="filtra"></a>
 		<fieldset style="border-radius: 10px;">
 			<legend><span style="font-size: 1.1em; font-weight: bold;">Filtro</span></legend>
+			
 			<form method="POST" onsubmit="return filtra()">
 				Titolo: 
 				<input type="text" id="nomeFiltro" name="nome" placeholder="Titolo">
@@ -21,11 +23,11 @@
 				or <input type="button" onclick="getPosition()" value="Usa la mia posizione">
 				
 				<br>
-				<input type="submit" value="Filtra">
+				<input type="submit" name="sendFiltro" value="Filtra">
 			</form>
 		</fieldset>
 		<div id="dati">
-			
+			Caricamento in corso...
 		</div>
 	</main>
 </body>

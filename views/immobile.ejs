@@ -1,9 +1,12 @@
 <%- include("header") %>
 	<main>
+		<% if(typeof okay !== "undefined"){ %>
+			La tua richiesta verrà presa in esame e ti sarà fornita una risposta entro 2 giorni lavorativi. Grazie!
+		<% } %>
 		<h1>Visualizza immobile</h1>
 		<div class="immobileSingolo">
 			
-				<% if(db[0].img !== "undefined"){ %>
+				<% if(typeof db[0].img !== "undefined"){ %>
 				<img src="image/<%= db[0].img %>">
 				<% } %>
 			<span>Titolo</span><%= db[0].titolo %><br>
@@ -11,7 +14,15 @@
 			<span>Prezzo</span><%= db[0].prezzo %><br>
 			<span class="desc">Descrizione</span><%= db[0].desc %>
 		</div>
-		
+		<br><br>
+		<h3>Se ti piace questo immobile scrivici il tuo numero e ti ricontatteremo il prima possibile!</h3>
+		<form method="POST">
+			<input type="hidden" name="idImm" value="<%= db[0]._id %>">
+			<input type="hidden" name="nameImm" value="<%= db[0].titolo %>">
+			<input type="text" id="tel" name="tel" placeholder="Numero di telefono" required>
+			<br><br>
+			<input type="submit" name="casa" value="Ricontattami">
+		</form>
 	</main>
 </body>
 </html>

@@ -1,6 +1,6 @@
 var loginFormVisible = false;
 function login(){
-	console.log("Eccomi");
+	//console.log("Eccomi");
 	if(!loginFormVisible){
 		document.getElementById("loginForm").classList.remove("animate__backOutRight");
 		document.getElementById("loginForm").classList.add("animate__backInRight");
@@ -49,6 +49,7 @@ function showError(error) {
 }
 
 
+
 function filtra(){
 	loadDoc(1);
 	return false;
@@ -69,7 +70,7 @@ function loadDoc(cerca) {		// 0 -> ricerca normale | 1 -> ricerca filtrata | 2 -
 	xhttp.open("POST", "/search", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	if(cerca == 1)
-		xhttp.send("citta="+_("cittaFiltro").value+"&nome="+_("nomeFiltro").value);
+		xhttp.send("citta="+_("cittaFiltro").value+"&nome="+_("nomeFiltro").value+"&filtra=a");
 	else if(cerca == 0)
 		xhttp.send();
 	else if(cerca == 2)
