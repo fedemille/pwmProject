@@ -1,7 +1,6 @@
 var loginFormVisible = false;
 function login(){
-	//console.log("Eccomi");
-	if(!loginFormVisible){
+	if(!loginFormVisible){	// switch tra le classi per l'animazione di ingresso e uscita
 		document.getElementById("loginForm").classList.remove("animate__backOutRight");
 		document.getElementById("loginForm").classList.add("animate__backInRight");
 	}
@@ -19,7 +18,7 @@ function getPosition() {
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(readPosition, showError);
 	} else {
-		alert("Geolocation is not supported by this browser.");
+		alert("Geolocalizzazione non supportata dal browser");
 	}
 }
 
@@ -34,43 +33,44 @@ function readPosition(position) {
 function showError(error) {
 	switch(error.code) {
 	case error.PERMISSION_DENIED:
-		alert("User denied the request for Geolocation.");
+		alert("Permesso negato");
 		break;
 	case error.POSITION_UNAVAILABLE:
-		alert("Location information is unavailable.");
+		alert("Posizione non disponibile");
 		break;
 	case error.TIMEOUT:
-		alert("The request to get user location timed out.");
+		alert("Timeout richiesta");
 		break;
 	case error.UNKNOWN_ERROR:
-		alert("An unknown error occurred.");
+		alert("Errore sconosciuto. Riprova più tardi");
 		break;
 	}
 }
 
 
 
-function filtra(){
-	loadDoc(1);
-	return false;
-}
-
 
 function _(id){
 	return document.getElementById(id);
 }
 
+
+function filtra(){
+	loadDoc(1);		// richiesta filtrata
+	return false;
+}
+
 function loadDoc(cerca) {		// 0 -> ricerca normale | 1 -> ricerca filtrata | 2 -> ricerca per areaRiservata
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if (this.readyState == 4 && this.status == 200) {
+	var xhttp = new XMLHttpRequest();	// creazione dell'oggetto
+	xhttp.onreadystatechange = function() {		// quando cambia lo stato
+		if (this.readyState == 4 && this.status == 200) {	// risposta pronta
 			document.getElementById("dati").innerHTML = this.responseText;
 		}
 	};
-	xhttp.open("POST", "/search", true);
-	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.open("POST", "/search", true);	// richiesta
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");	// header
 	if(cerca == 1)
-		xhttp.send("citta="+_("cittaFiltro").value+"&nome="+_("nomeFiltro").value+"&filtra=a");
+		xhttp.send("citta="+_("cittaFiltro").value+"&nome="+_("nomeFiltro").value+"&filtra=a");	// parametri
 	else if(cerca == 0)
 		xhttp.send();
 	else if(cerca == 2)

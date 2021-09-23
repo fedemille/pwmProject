@@ -16,8 +16,6 @@
 	</html>
 <% }
 	else{ %>
-	
-	
 	<%- include("header") %>
 		<script>
 			addEventListener("load", function(){
@@ -29,6 +27,7 @@
 			Ciao <%= nome %> <%= cognome %>.<br><br>
 			<h4><%  if(typeof msg !== "undefined") msg %></h4>
 			<h3>Gestione immobili</h3>
+			<h4>Aggiungi immobile</h4>
 			<form method="POST" action="/areaRiservata" enctype="multipart/form-data">
 				<input type="text" name="nome" placeholder="Titolo">
 				<input type="text" name="desc" placeholder="Descrizione">
@@ -46,11 +45,11 @@
 				</select>
 				<input type="text" name="nomeCitta" placeholder="Nome della citta'">
 				<label for="image">Upload Image</label>
-                <input type="file" id="image" name="image" value="">
+                <input type="file" id="image" name="image">
 				<input type="submit" name="add" value="Aggiungi">
 			</form>
 			
-			
+			<h4>Elimina immobile</h4>
 			<div id="dati">
 				
 			</div>

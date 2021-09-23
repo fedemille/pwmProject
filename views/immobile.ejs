@@ -6,8 +6,8 @@
 		<h1>Visualizza immobile</h1>
 		<div class="immobileSingolo">
 			
-				<% if(typeof db[0].img !== "undefined"){ %>
-				<img src="image/<%= db[0].img %>">
+				<% if(typeof db[0].img !== "undefined" && db[0].img != ""){ %>
+				<img src="image/<%= db[0].img %>" alt="immagine immobile">
 				<% } %>
 			<span>Titolo</span><%= db[0].titolo %><br>
 			
